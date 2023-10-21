@@ -2,30 +2,22 @@ import { CreateUserDto } from '../dto/create.user.dto';
 import { UpdateUserDto } from '../dto/update.user.dto';
 import { Inject } from '@nestjs/common';
 import { IUserRepository } from '../repository/user.repository.interface';
+import { BaseAbstractService } from 'src/core/base-service/base.abstract.service';
+import { User } from 'src/infrastructure/typeorm/entities/user.entity';
 
-export class UserService {
+export class UserService extends BaseAbstractService<User> {
   constructor(
     @Inject('IUserRepository')
     private readonly userRepository: IUserRepository,
-  ) {}
-
-  async findAllUsers() {
-    return await this.userRepository.findAll();
+  ) {
+    super(userRepository);
   }
 
-  async findOneUser(id: string) {
-    return await this.userRepository.findOne({ where: { userId: id } });
+  async create(dto: CreateUserDto): Promise<User> {
+    return await this.userRepository.create(dto);
   }
 
-  async createUser(user: CreateUserDto) {
-    return await this.userRepository.create(user);
-  }
-
-  async updateUser(id: string, user: UpdateUserDto) {
-    return await this.userRepository.update(id, user);
-  }
-
-  async deleteUser(id: string) {
-    return await this.userRepository.delete(id);
+  async update(id: string, dto: UpdateUserDto): Promise<User> {
+    return await this.userRepository.update(id, dto);
   }
 }
