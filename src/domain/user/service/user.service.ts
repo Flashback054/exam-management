@@ -13,6 +13,12 @@ export class UserService extends BaseAbstractService<User> {
     super(userRepository);
   }
 
+  async findOneByEmail(email: string): Promise<User> {
+    return await this.userRepository.findOne({
+      where: { email },
+    });
+  }
+
   async create(dto: CreateUserDto): Promise<User> {
     return await this.userRepository.create(dto);
   }
