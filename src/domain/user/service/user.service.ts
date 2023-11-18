@@ -20,7 +20,10 @@ export class UserService extends BaseAbstractService<User> {
   }
 
   async create(dto: CreateUserDto): Promise<User> {
-    return await this.userRepository.create(dto);
+    return await this.userRepository.create({
+      userId: dto.userName,
+      ...dto,
+    });
   }
 
   async update(id: string, dto: UpdateUserDto): Promise<User> {

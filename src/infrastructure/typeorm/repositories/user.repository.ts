@@ -16,4 +16,8 @@ export class UserRepository
   ) {
     super(userRepository);
   }
+
+  async findOneByEmail(email: string): Promise<User> {
+    return await this.userRepository.findOne({ where: { email } });
+  }
 }

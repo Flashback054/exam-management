@@ -26,6 +26,15 @@ export class UserController {
     );
   }
 
+  @Get('populate')
+  async populateOneUser() {
+    return await this.userService.create({
+      userName: 'test',
+      email: 'test@example.com',
+      password: '123',
+    });
+  }
+
   @Get(':id')
   async findOneUser(@Param('id') id: string) {
     return await this.userService.findOneById(id);
